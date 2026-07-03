@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>KalynDiamond — Category Embed</title>
+
+  <style>
+    :root {
+      --desktop-aspect: 56.25%; /* 16:9 */
+      --mobile-aspect: 80%;
+      --min-height: 360px;
+    }
+    body { margin:0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial; background:#fff; color:#111; }
+    .page { max-width:1200px; margin:0 auto; padding:16px; }
+    h1 { font-size:1.125rem; margin:0 0 12px; }
+    .iframe-container {
+      position:relative; width:100%; padding-top:var(--desktop-aspect); min-height:var(--min-height);
+      background:#f6f7f9; border-radius:6px; overflow:hidden; box-shadow:0 1px 4px rgba(0,0,0,0.06);
+    }
+    .iframe-container iframe { position:absolute; top:0; left:0; width:100%; height:100%; border:0; display:block; background:white; }
+    @media (max-width:800px) { .iframe-container { padding-top:var(--mobile-aspect); min-height:520px; } }
+    @media (max-width:480px) { .iframe-container { padding-top:75vh; min-height:520px; } }
+    .iframe-fallback { padding:20px; text-align:center; font-size:0.95rem; color:#333; }
+    .note { margin-top:12px; font-size:0.9rem; color:#555; }
+  </style>
+</head>
+<body>
+  <main class="page" role="main">
+    <h1>KalynDiamond — Category Embed</h1>
+
+    <div class="iframe-container" role="region" aria-label="Jeweler Showcase category embed">
+      <iframe
+        title="Jeweler Showcase — Category"
+        src="https://KalynDiamond-frame-categoryembed.jewelershowcase.com/"
+        loading="lazy"
+        sandbox="allow-forms allow-scripts allow-popups"
+        referrerpolicy="no-referrer-when-downgrade"
+        aria-hidden="false"
+      ></iframe>
+
+      <div class="iframe-fallback" aria-hidden="true">
+        If the embedded content does not appear, open it directly:
+        <div style="margin-top:8px;">
+          <a href="https://KalynDiamond-frame-categoryembed.jewelershowcase.com/" target="_blank" rel="noopener noreferrer">
+            Open KalynDiamond category in a new tab
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <p class="note">
+      Notes: the iframe is responsive for laptops and phones. If the embedded site needs cookies or
+      same-origin access, add sandbox="allow-same-origin" but only if you trust the framed site.
+    </p>
+  </main>
+
+  <!-- Parent listener for height adjustments from the iframe (optional).
+       Only active when the embedded page posts { type: 'setHeight', height: <number> }.
+       It accepts messages only from the iframe origin for security. -->
+  <script>
+    (function(){
+      // Origin of the iframe (exact origin string):
+      const iframeOrigin = 'https://KalynDiamond-frame-categoryembed.jewelershowcase.com';
+
+      window.addEventListener('message', function (e) {
+        if (e.origin !== iframeOrigin) return; // accept only from the iframe origin
+        const data = e.data;
+        if (!data || data.type !== 'setHeight') return;
+        if (typeof data.height !== 'number') return;
+        // find the iframe (exact match or startsWith)
+        const iframe = document.querySelector('iframe[src="' + iframeOrigin + '/"]') ||
+                       document.querySelector('iframe[src^="' + iframeOrigin + '"]');
+        if (iframe) {
+          iframe.style.height = data.height + 'px';
+        }
+      }, false);
+    })();
+  </script>
+</body>
+</html>
