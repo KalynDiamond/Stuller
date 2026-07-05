@@ -1,0 +1,83 @@
+/* embed-spacing.css
+   Adds extra spacing below the search bar and consistent gaps between category tiles.
+   Paste this stylesheet into the embedded site's layout (link it from the page head), or
+   include its contents into the site's main stylesheet.
+ */
+:root{
+  --search-bottom-space:24px;
+  --category-gap:16px;
+  --category-row-gap:20px;
+  --category-min:140px;
+}
+
+/* Add breathing room under the search area */
+.search-wrapper,
+.search-bar,
+.header .search,
+.search-container {
+  margin-bottom: var(--search-bottom-space) !important;
+}
+
+/* Search input tweaks */
+input[type="search"],
+input.search,
+.search-input {
+  display:block;
+  width:100%;
+  padding:10px 14px;
+  border-radius:28px;
+  box-sizing:border-box;
+  margin-bottom:var(--search-bottom-space);
+}
+
+/* Grid layout for category tiles (preferred) */
+.categories,
+.category-list,
+.category-grid,
+.grid-categories {
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(var(--category-min),1fr));
+  gap:var(--category-gap);
+  row-gap:var(--category-row-gap);
+  align-items:start;
+  padding-left:16px;
+  padding-right:16px;
+  box-sizing:border-box;
+}
+
+/* Flex fallback */
+.category-list.flex,
+.category-list-flex {
+  display:flex;
+  flex-wrap:wrap;
+  gap:var(--category-gap);
+  padding-left:12px;
+  padding-right:12px;
+}
+
+/* Tile/card padding */
+.category-item,
+.category-card,
+.tile,
+.category-tile {
+  padding:12px;
+  box-sizing:border-box;
+  margin:0;
+}
+
+/* Mobile tweaks (iPhone widths) */
+@media (max-width:420px) {
+  :root{
+    --search-bottom-space:18px;
+    --category-gap:12px;
+    --category-row-gap:14px;
+    --category-min:120px;
+  }
+  .categories, .category-list {
+    padding-left:12px;
+    padding-right:12px;
+  }
+  input[type="search"], .search-input {
+    padding:10px 12px;
+  }
+}
